@@ -25,14 +25,14 @@ public class ProcessorTest {
 	public void inlineCss() throws IOException {
 		String str = resourceAsString("testData/cssExternal.html");
 		Document doc = Jsoup.parse(str);
-		assertEqualsIgnoreWhitespace(resourceAsString("testData/cssInline.html"), proc.process(doc).toString());
+		assertEqualsIgnoreWhitespace(resourceAsString("testData/cssExternal.out.html"), proc.process(doc).toString());
 	}
 	
 	@Test
 	public void i18n() throws IOException {
-		String str = resourceAsString("testData/beforeI18n.html");
+		String str = resourceAsString("testData/i18n.html");
 		Document doc = Jsoup.parse(str);
-		assertEqualsIgnoreWhitespace(resourceAsString("testData/afterI18n.html"), proc.process(doc).toString());
+		assertEqualsIgnoreWhitespace(resourceAsString("testData/i18n.out.html"), proc.process(doc).toString());
 	}
 	
 	@Test
