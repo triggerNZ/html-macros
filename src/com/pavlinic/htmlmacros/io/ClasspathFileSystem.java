@@ -1,21 +1,23 @@
-package com.pavlinic.htmlmacros;
+package com.pavlinic.htmlmacros.io;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ClasspathResourceProvider implements FileProvider {
+import com.pavlinic.htmlmacros.Util;
+
+public class ClasspathFileSystem implements ReadableFileSystem {
 
 	private final String basePath;
 
-	public ClasspathResourceProvider(String basePath) {
+	public ClasspathFileSystem(String basePath) {
 		this.basePath = basePath;
 	}
 
 	@Override
 	public String contents(String href) {
 		try {
-			return TestUtil.resourceAsString(basePath + href);
+			return Util.resourceAsString(basePath + href);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

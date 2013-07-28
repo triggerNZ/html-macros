@@ -5,11 +5,14 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
+
+import com.pavlinic.htmlmacros.io.ClasspathFileSystem;
+
+import static com.pavlinic.htmlmacros.Util.*;
 import static com.pavlinic.htmlmacros.TestUtil.*;
-import static org.junit.Assert.*;
 
 public class ProcessorTest {
-	private Processor proc = new Processor(new ClasspathResourceProvider("testData/"));
+	private Processor proc = new Processor(new ClasspathFileSystem("testData/"));
 	
 	@Test
 	public void documentWithNoMacroAttributesIsUnchanged() throws IOException {
