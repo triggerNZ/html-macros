@@ -6,9 +6,7 @@ import java.util.ResourceBundle;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.parser.Tag;
-import org.jsoup.select.Elements;
 import org.jsoup.select.NodeVisitor;
 
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
