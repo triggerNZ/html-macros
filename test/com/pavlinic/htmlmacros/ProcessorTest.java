@@ -41,4 +41,17 @@ public class ProcessorTest {
 		Document doc = Jsoup.parse(str);
 		assertEqualsIgnoreWhitespace(resourceAsString("testData/scriptAndBind.out.html"), proc.process(doc).toString());
 	}
+	
+	@Test
+	public void foreach() throws IOException {
+		String str = resourceAsString("testData/foreach.html");
+		Document doc = Jsoup.parse(str);
+		assertEqualsIgnoreWhitespace(resourceAsString("testData/foreach.out.html"), proc.process(doc).toString());
+	}
+	@Test
+	public void foreachNoVar() throws IOException {
+		String str = resourceAsString("testData/foreachNoVar.html");
+		Document doc = Jsoup.parse(str);
+		assertEqualsIgnoreWhitespace(resourceAsString("testData/foreachNoVar.out.html"), proc.process(doc).toString());
+	}
 }

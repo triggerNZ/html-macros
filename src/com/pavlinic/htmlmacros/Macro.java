@@ -4,6 +4,6 @@ import javax.script.ScriptEngine;
 
 import org.jsoup.nodes.Node;
 
-public interface Handler {
+public interface Macro {
 	void handle(Node node, ScriptEngine engine);
 }

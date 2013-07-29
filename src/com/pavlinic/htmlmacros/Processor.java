@@ -12,6 +12,7 @@ import org.jsoup.nodes.Node;
 import com.pavlinic.htmlmacros.dom.DomTraverse;
 import com.pavlinic.htmlmacros.dom.Visitor;
 import com.pavlinic.htmlmacros.handlers.BindHandler;
+import com.pavlinic.htmlmacros.handlers.ForeachHandler;
 import com.pavlinic.htmlmacros.handlers.I18NHandler;
 import com.pavlinic.htmlmacros.handlers.InlineHandler;
 import com.pavlinic.htmlmacros.handlers.ScriptHandler;
@@ -20,7 +21,7 @@ import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 public class Processor {
 	private final ReadableFileSystem fileProvider;
 	private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-	private final Map<String, Handler> handlers = new HashMap<>();
+	private final Map<String, Macro> handlers = new HashMap<>();
 	
 	public Processor(ReadableFileSystem fileProvider) {
 		this.fileProvider = fileProvider;
@@ -33,9 +34,10 @@ public class Processor {
 		registerHandler("inline", new InlineHandler(fileProvider));
 		registerHandler("script", new ScriptHandler(fileProvider));
 		registerHandler("bind", new BindHandler(fileProvider));
+		registerHandler("foreach", new ForeachHandler(fileProvider));
 	}
 
-	private void registerHandler(String tag, Handler handler) {
+	private void registerHandler(String tag, Macro handler) {
 		handlers.put("data-macro-" + tag, handler);
 	}
 
@@ -49,7 +51,7 @@ public class Processor {
 			public void visit(Node node) {
 				for (String key : handlers.keySet()) {
 					if (node.hasAttr(key)) {
-						Handler handler = handlers.get(key);
+						Macro handler = handlers.get(key);
 						handler.handle(node, engine);
 					}
 				}
@@ -58,9 +60,4 @@ public class Processor {
 		
 		return doc;
 	}
-
-	protected void processBind(Node node, ScriptEngine engine) {
-		
-	}
-
 }

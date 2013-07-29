@@ -1,30 +1,36 @@
 package com.pavlinic.htmlmacros.dom;
 
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Node;
+import org.jsoup.nodes.Element;
 /**
  * Allows traversal of nodes with deletions and replacements. Preorder traversal. 
  * @author Tin
  *
  */
 public class DomTraverse {
-	public static void traverse(Node node, Visitor visitor) {
+	public static void traverse(Element node, Visitor visitor) {
 		visitor.visit(node);
-		if (exists(node)) {
-			for (Node child : node.childNodes()) {
-				traverse(child, visitor);
+		node = reload(node);
+		for (int i = 0; i < node.children().size();) {
+			int prevSize = node.children().size();
+			Element child = node.child(i);
+			traverse(child, visitor);
+			int afterSize = node.children().size();
+			if (prevSize == afterSize) {
+				i++; //Node has been updated, move along
+			} else if (prevSize > afterSize) {
+				//A node deleted itself. i is now pointing at the next thing so no need to increment
+			} else {
+				throw new RuntimeException("A macro has added a sibling. This is not allowed");
 			}
 		}
 	}
 	
-	public static boolean exists(Node node) {
-		int index = node.siblingIndex();
-		Node parent = node.parent();
-		
+	public static Element reload(Element node) {
+		int index = node.elementSiblingIndex();
+		Element parent = node.parent();
 		if (parent == null) {
-			return node instanceof Document; //Only root elements have no parents, the others must have been removed from the DOM
+			return node; //this is the best we can do
 		}
-		
-		return node == parent.childNode(index);
+		return parent.child(index);
 	}
 }

@@ -8,10 +8,10 @@ import javax.script.ScriptEngine;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-import com.pavlinic.htmlmacros.Handler;
+import com.pavlinic.htmlmacros.Macro;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 
-public class I18NHandler implements Handler {
+public class I18NHandler implements Macro {
 	private final ReadableFileSystem fileSystem;
 
 	public I18NHandler(ReadableFileSystem fileSystem) {

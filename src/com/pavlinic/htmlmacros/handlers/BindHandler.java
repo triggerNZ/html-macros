@@ -6,10 +6,10 @@ import javax.script.ScriptException;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-import com.pavlinic.htmlmacros.Handler;
+import com.pavlinic.htmlmacros.Macro;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 
-public class BindHandler implements Handler {
+public class BindHandler implements Macro {
 
 	public BindHandler(ReadableFileSystem fileSystem) {
 	}

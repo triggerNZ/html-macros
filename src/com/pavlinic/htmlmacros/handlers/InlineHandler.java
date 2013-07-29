@@ -6,10 +6,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.parser.Tag;
 
-import com.pavlinic.htmlmacros.Handler;
+import com.pavlinic.htmlmacros.Macro;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 
-public class InlineHandler implements Handler {
+public class InlineHandler implements Macro {
 	private final ReadableFileSystem fs;
 
 	public InlineHandler(ReadableFileSystem fs) {
