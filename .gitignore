@@ -2,9 +2,7 @@
 bin
 *.class
 test.build
+dist
 
-# Package Files #
-*.jar
-*.war
-*.ear
+
 

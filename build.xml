@@ -49,7 +49,7 @@
 	</target>
 
 	<target name="jar" depends="init,compile">
-		<jar destfile="${jar}" basedir="${build.dir}" includes="*.class"/>
+		<jar destfile="${dist.dir}/${jar}" basedir="${build.dir}" includes="*.class"/>
 	</target>
 	
 	<target name="test" depends="compile,compile.test">
