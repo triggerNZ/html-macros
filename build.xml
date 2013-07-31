@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jul 31, 2013 11:01:38 AM                                                        
+
+     Builds the html-macros jar file.
+                   
+     Tin                                                                
+     ====================================================================== -->
+<project name="project" default="all">
+	<property name="version" value="0.0.1"/>
+	<property name="jar" value="html-macros-${version}.jar"/>
+	<property name="src.dir" value="src"/>
+	<property name="test.dir" value="test"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="build.dir" value="build"/>
+	<property name="test.build.dir" value="test.build"/>
+	<property name="dist.dir" value="dist"/>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete dir="${test.build.dir}"/>
+		<delete dir="${dist.dir}"/>
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${test.build.dir}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+	
+	<target name="compile">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="on">
+			<classpath>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="compile.test">
+		<javac srcdir="${test.dir}" destdir="${test.build.dir}" debug="on">
+			<classpath>
+				<pathelement location="${build.dir}"/>
+				<fileset dir="${lib.dir}" includes="*.jar"/>
+			</classpath>
+		</javac>
+		<copy todir="${test.build.dir}">
+			<fileset dir="${test.dir}" includes="testData/**/*"/>
+		</copy>
+	</target>
+
+	<target name="jar" depends="init,compile">
+		<jar destfile="${jar}" basedir="${build.dir}" includes="*.class"/>
+	</target>
+	
+	<target name="test" depends="compile,compile.test">
+		    <junit>
+		      <classpath>
+		      	<pathelement location="${build.dir}"/>
+		      	<pathelement location="${test.build.dir}"/>
+		      	<fileset dir="${lib.dir}" includes="*.jar"/>
+		      </classpath>
+
+		      <formatter type="brief" usefile="false" />
+		      <batchtest>
+		        <fileset dir="${test.build.dir}" includes="**/*Test.class" />
+		      </batchtest>
+		    </junit>
+	</target>
+	
+	<target name="all" depends="clean,jar,test"/>
+</project>

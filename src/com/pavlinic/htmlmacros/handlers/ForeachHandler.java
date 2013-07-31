@@ -32,7 +32,7 @@ public class ForeachHandler implements Macro {
 			for (int i = 0; i < size; i++) {
 				Object data = array.get(i);
 				for (Element e : tmp.children()) {
-					el.append("<script type=\"text/javascript\" data-macro-script> $data = " + data + " </script>");
+					el.append("<script type=\"text/javascript\" data-macro-script> $data = '" + data + "'; </script>");
 					el.appendChild(e.clone());
 				}
 			}

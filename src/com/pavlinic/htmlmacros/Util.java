@@ -8,7 +8,7 @@ import java.io.Reader;
 
 public class Util {
 	public static String resourceAsString(String path) throws IOException {
-		return readAll(TestUtil.class.getClassLoader().getResourceAsStream(path));
+		return readAll(Util.class.getClassLoader().getResourceAsStream(path));
 	}
 
 	public static String readAll(InputStream stream) throws IOException {

@@ -1,6 +1,7 @@
 #Generated files
 bin
 *.class
+test.build
 
 # Package Files #
 *.jar
