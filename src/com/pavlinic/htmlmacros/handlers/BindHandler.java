@@ -21,7 +21,6 @@ public class BindHandler implements Macro {
 		if (value != null) {
 			el.text(value.toString());
 		}
-		el.attributes().remove("data-macro-bind");
 	}
 
 }

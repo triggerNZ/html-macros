@@ -25,7 +25,6 @@ public class I18NHandler implements Macro {
 		ResourceBundle i18n = fileSystem.i18n(locale);
 
 		String key = el.attr("data-macro-i18n");
-		el.attributes().remove("data-macro-i18n");
 
 		el.text(i18n.getString(key));
 	}

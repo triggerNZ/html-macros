@@ -36,7 +36,6 @@ public class ForeachHandler implements Macro {
 				el.appendChild(e.clone());
 			}
 		}
-		el.attributes().remove("data-macro-foreach");
 	}
 
 }

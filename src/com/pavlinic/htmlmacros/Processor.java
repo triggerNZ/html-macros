@@ -53,6 +53,7 @@ public class Processor implements MacroRegister {
 					if (node.hasAttr(key)) {
 						Macro macro = macros.get(key);
 						macro.handle(node, ctx, scope);
+						node.attributes().remove(key);
 					}
 				}
 			}
