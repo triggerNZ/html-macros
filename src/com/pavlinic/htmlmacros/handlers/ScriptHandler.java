@@ -1,10 +1,9 @@
 package com.pavlinic.htmlmacros.handlers;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.Macro;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
@@ -15,15 +14,11 @@ public class ScriptHandler implements Macro {
 	}
 
 	@Override
-	public void handle(Node node, ScriptEngine engine) {
+	public void handle(Node node, Context ctx, ScriptableObject scope) {
 		Element el = (Element) node;
 		String text = el.data();
-		try {
-			engine.eval(text);
-			el.remove();
-		} catch (ScriptException e) {
-			throw new RuntimeException(e);
-		}
+		ctx.evaluateString(scope, text, "", 0, null);
+		el.remove();
 	}
 
 }

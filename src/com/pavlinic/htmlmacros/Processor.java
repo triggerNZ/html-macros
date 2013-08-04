@@ -3,11 +3,10 @@ package com.pavlinic.htmlmacros;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.dom.DomTraverse;
 import com.pavlinic.htmlmacros.dom.Visitor;
@@ -17,47 +16,54 @@ import com.pavlinic.htmlmacros.handlers.I18NHandler;
 import com.pavlinic.htmlmacros.handlers.InlineHandler;
 import com.pavlinic.htmlmacros.handlers.ScriptHandler;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
+import com.pavlinic.htmlmacros.js.MacroObject;
 
-public class Processor {
+public class Processor implements MacroRegister {
 	private final ReadableFileSystem fileProvider;
-	private final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-	private final Map<String, Macro> handlers = new HashMap<>();
+	private final Map<String, Macro> macros = new HashMap<>();
 	
 	public Processor(ReadableFileSystem fileProvider) {
 		this.fileProvider = fileProvider;
 		
-		registerHandlers();
+		registerDefaultHandlers();
 	}
 
-	private void registerHandlers() {
-		registerHandler("i18n", new I18NHandler(fileProvider));
-		registerHandler("inline", new InlineHandler(fileProvider));
-		registerHandler("script", new ScriptHandler(fileProvider));
-		registerHandler("bind", new BindHandler(fileProvider));
-		registerHandler("foreach", new ForeachHandler(fileProvider));
+	private void registerDefaultHandlers() {
+		registerMacro("i18n", new I18NHandler(fileProvider));
+		registerMacro("inline", new InlineHandler(fileProvider));
+		registerMacro("script", new ScriptHandler(fileProvider));
+		registerMacro("bind", new BindHandler(fileProvider));
+		registerMacro("foreach", new ForeachHandler(fileProvider));
 	}
 
-	private void registerHandler(String tag, Macro handler) {
-		handlers.put("data-macro-" + tag, handler);
+	public void registerMacro(String tag, Macro handler) {
+		macros.put("data-macro-" + tag, handler);
 	}
 
 	public Document process(Document input) {
 		// create a JavaScript engine
-		final ScriptEngine engine = scriptEngineManager.getEngineByName("JavaScript");
+		final Context ctx = Context.enter();
+		final ScriptableObject scope = initEnvironment(ctx);
 		final Document doc = input.clone();
 
 		DomTraverse.traverse(doc, new Visitor() {
 			@Override
 			public void visit(Node node) {
-				for (String key : handlers.keySet()) {
+				for (String key : macros.keySet()) {
 					if (node.hasAttr(key)) {
-						Macro handler = handlers.get(key);
-						handler.handle(node, engine);
+						Macro macro = macros.get(key);
+						macro.handle(node, ctx, scope);
 					}
 				}
 			}
 		});;
 		
 		return doc;
+	}
+
+	private ScriptableObject initEnvironment(Context engine) {
+		ScriptableObject scope = engine.initStandardObjects();
+		ScriptableObject.putProperty(scope, "macro", new MacroObject(this));
+		return scope;
 	}
 }

@@ -1,10 +1,9 @@
 package com.pavlinic.htmlmacros.handlers;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.Macro;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
@@ -15,18 +14,14 @@ public class BindHandler implements Macro {
 	}
 
 	@Override
-	public void handle(Node node, ScriptEngine engine) {
+	public void handle(Node node, Context ctx, ScriptableObject scope) {
 		final Element el = (Element) node;
 		final String expr = el.attr("data-macro-bind");
-		try {
-			final Object value = engine.eval(expr);
-			if (value != null) {
-				el.text(value.toString());
-			}
-			el.attributes().remove("data-macro-bind");
-		} catch (ScriptException e) {
-			throw new RuntimeException(e);
+		final Object value = ctx.evaluateString(scope, expr, "", 0, null);
+		if (value != null) {
+			el.text(value.toString());
 		}
+		el.attributes().remove("data-macro-bind");
 	}
 
 }

@@ -3,10 +3,10 @@ package com.pavlinic.htmlmacros.handlers;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.script.ScriptEngine;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.Macro;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
@@ -19,7 +19,7 @@ public class I18NHandler implements Macro {
 	}
 	
 	@Override
-	public void handle(Node node, ScriptEngine engine) {
+	public void handle(Node node, Context ctx, ScriptableObject scope) {
 		Element el = (Element) node;
 		Locale locale = new Locale("en", "US");
 		ResourceBundle i18n = fileSystem.i18n(locale);

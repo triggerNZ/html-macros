@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<title>Empty document</title>
+		<script type="text/javascript" data-macro-script>
+			macro.register('hello', function($element) {
+				$element.text("Hello World");
+				$element.attributes().remove('data-macro-hello');
+			});
+		</script>
+	</head>
+	<body data-macro-hello>
+	</body>
+</html>
