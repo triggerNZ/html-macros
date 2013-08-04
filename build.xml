@@ -53,7 +53,7 @@
 	</target>
 	
 	<target name="test" depends="compile,compile.test">
-		    <junit>
+		    <junit haltonfailure="on">
 		      <classpath>
 		      	<pathelement location="${build.dir}"/>
 		      	<pathelement location="${test.build.dir}"/>
