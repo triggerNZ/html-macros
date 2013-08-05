@@ -7,6 +7,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.Macro;
+import com.pavlinic.htmlmacros.PropertyProvider;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 
 public class InlineHandler implements Macro {
@@ -17,7 +18,7 @@ public class InlineHandler implements Macro {
 	}
 
 	@Override
-	public void  handle(Node el, Context ctx, ScriptableObject scope) {
+	public void  handle(Node el, Context ctx, ScriptableObject scope, PropertyProvider props) {
 		if (el.attr("rel").equals("stylesheet")) {
 			String href = el.attr("href");
 			String text = fs.contents(href);

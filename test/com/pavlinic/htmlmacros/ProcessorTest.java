@@ -29,13 +29,6 @@ public class ProcessorTest {
 	}
 	
 	@Test
-	public void i18n() throws IOException {
-		String str = resourceAsString("testData/i18n.html");
-		Document doc = Jsoup.parse(str);
-		assertEqualsIgnoreWhitespace(resourceAsString("testData/i18n.out.html"), proc.process(doc).toString());
-	}
-	
-	@Test
 	public void scriptAndBind() throws IOException {
 		String str = resourceAsString("testData/scriptAndBind.html");
 		Document doc = Jsoup.parse(str);

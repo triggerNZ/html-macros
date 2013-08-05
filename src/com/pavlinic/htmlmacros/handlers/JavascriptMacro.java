@@ -6,6 +6,7 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.Macro;
+import com.pavlinic.htmlmacros.PropertyProvider;
 
 public class JavascriptMacro implements Macro {
 	private final Function fn;
@@ -15,7 +16,7 @@ public class JavascriptMacro implements Macro {
 	}
 
 	@Override
-	public void handle(Node node, Context ctx, ScriptableObject scope) {
+	public void handle(Node node, Context ctx, ScriptableObject scope, PropertyProvider props) {
 		fn.call(ctx, scope, null, new Object[] {node});
 	}
 

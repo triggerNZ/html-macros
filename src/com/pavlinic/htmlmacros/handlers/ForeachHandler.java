@@ -8,6 +8,7 @@ import org.mozilla.javascript.ScriptableObject;
 
 
 import com.pavlinic.htmlmacros.Macro;
+import com.pavlinic.htmlmacros.PropertyProvider;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 
 public class ForeachHandler implements Macro {
@@ -15,7 +16,7 @@ public class ForeachHandler implements Macro {
 	}
 
 	@Override
-	public void handle(Node node, Context ctx, ScriptableObject scope) {
+	public void handle(Node node, Context ctx, ScriptableObject scope, PropertyProvider props) {
 		Element el = (Element) node;
 		String expr = el.attr("data-macro-foreach");
 		Object o = ctx.evaluateString(scope, expr, "", 0, null);

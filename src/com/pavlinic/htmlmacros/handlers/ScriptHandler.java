@@ -6,6 +6,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.pavlinic.htmlmacros.Macro;
+import com.pavlinic.htmlmacros.PropertyProvider;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
 
 public class ScriptHandler implements Macro {
@@ -14,7 +15,7 @@ public class ScriptHandler implements Macro {
 	}
 
 	@Override
-	public void handle(Node node, Context ctx, ScriptableObject scope) {
+	public void handle(Node node, Context ctx, ScriptableObject scope, PropertyProvider props) {
 		Element el = (Element) node;
 		String text = el.data();
 		ctx.evaluateString(scope, text, "", 0, null);
