@@ -13,6 +13,7 @@ import com.pavlinic.htmlmacros.dom.Visitor;
 import com.pavlinic.htmlmacros.handlers.BindHandler;
 import com.pavlinic.htmlmacros.handlers.ForeachHandler;
 import com.pavlinic.htmlmacros.handlers.I18NMacro;
+import com.pavlinic.htmlmacros.handlers.ImportMacro;
 import com.pavlinic.htmlmacros.handlers.InlineHandler;
 import com.pavlinic.htmlmacros.handlers.ScriptHandler;
 import com.pavlinic.htmlmacros.io.ReadableFileSystem;
@@ -36,6 +37,7 @@ public class Processor implements MacroRegister, PropertyProvider {
 		registerMacro("bind", new BindHandler(fileProvider));
 		registerMacro("foreach", new ForeachHandler(fileProvider));
 		registerMacro("property", new PropertyHandler(fileProvider));
+		registerMacro("import", new ImportMacro(fileProvider));
 	}
 
 	public void registerMacro(String tag, Macro handler) {
