@@ -31,13 +31,13 @@ public class Processor implements MacroRegister, PropertyProvider {
 	}
 
 	private void registerDefaultHandlers() {
+		registerMacro("include", new ImportMacro(fileProvider));
 		registerMacro("i18n", new I18NMacro(fileProvider));
 		registerMacro("inline", new InlineHandler(fileProvider));
 		registerMacro("script", new ScriptHandler(fileProvider));
 		registerMacro("bind", new BindHandler(fileProvider));
 		registerMacro("foreach", new ForeachHandler(fileProvider));
 		registerMacro("property", new PropertyHandler(fileProvider));
-		registerMacro("import", new ImportMacro(fileProvider));
 	}
 
 	public void registerMacro(String tag, Macro handler) {

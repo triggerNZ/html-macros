@@ -22,7 +22,7 @@ public class ImportMacro implements Macro {
 	@Override
 	public void handle(Node node, Context ctx, ScriptableObject scope, PropertyProvider props) {
 		Element el = (Element) node;
-		String filename = node.attr("data-macro-import");
+		String filename = node.attr("data-macro-include");
 		String contents = fileProvider.contents(filename);
 		Element parent = el.parent();
 		Integer index = el.elementSiblingIndex();
